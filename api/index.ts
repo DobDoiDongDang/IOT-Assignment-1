@@ -4,6 +4,7 @@ import apiRouter from "./routes/api.js";
 import { handle } from "hono/vercel";
 
 const app = new Hono().basePath("/api");
+const mainpage = new Hono();
 
 app.use(
   "*",
@@ -13,8 +14,12 @@ app.use(
     allowMethods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
   })
 );
+mainpage.get('/', (c) => {
+  return c.json({ message : "oi No page here but you can look at /api/students for students data" })
+})
 
-app.route("/v1", apiRouter);
+
+app.route("/", apiRouter);
 
 export const config = {
   runtime: "edge",
